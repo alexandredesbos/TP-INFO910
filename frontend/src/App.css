@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.backend-message {
+  background-color: #61dafb;
+  padding: 20px;
+  border-radius: 8px;
+  color: #282c34;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  border: 2px solid #21a1f1;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 1.2rem;
+  color: #61dafb;
+}
