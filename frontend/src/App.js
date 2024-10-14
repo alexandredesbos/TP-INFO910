@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     // Appel au backend pour récupérer des données
-    fetch("http://backend:5000/api/data")
+    fetch("http://localhost:8000/api/data")
       .then((response) => {
         if (!response.ok) {
           console.log(response);
@@ -49,7 +49,7 @@ function App() {
         <footer>
           <p>
             This message is fetched from the backend API running at{" "}
-            <code>http://backend:5000</code>
+            <code>http://backend:8000</code>
           </p>
         </footer>
       </header>
