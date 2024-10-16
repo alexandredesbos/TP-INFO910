@@ -29,4 +29,5 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
+      nodePort: 31120 # Port entre 30000-32767 pour l'exposition
   type: LoadBalancer
