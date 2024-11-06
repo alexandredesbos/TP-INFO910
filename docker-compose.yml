@@ -1,22 +1,23 @@
-version: "3.8"
-
+version: "3"
 services:
   backend:
-    build: ./backend
+    image: thxz3us/backend
+    build:
+      context: ./backend
     ports:
       - "8000:8000"
     networks:
-      - mynetwork
+      - app-network
 
   frontend:
-    build: ./frontend
+    image: thxz3us/frontend
+    build:
+      context: ./frontend
     ports:
       - "3000:3000"
     networks:
-      - mynetwork
-    depends_on:
-      - backend
+      - app-network
 
 networks:
-  mynetwork:
+  app-network:
     driver: bridge

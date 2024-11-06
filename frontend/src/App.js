@@ -2,57 +2,123 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
+  // Fetch des utilisateurs existants
   useEffect(() => {
-    // Appel au backend pour récupérer des données
-    fetch("http://localhost:8000/api/data")
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = () => {
+    setLoading(true);
+    fetch("http://localhost:8000/api/users")
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
-          throw new Error("Failed to fetch data from backend");
+          throw new Error("Failed to fetch users");
         }
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        setMessage(data.message); // Message reçu du backend
+        console.log("Fetched users:", data); // Log des données récupérées
+        setUsers(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Error fetching users:", error);
         setError(error.message);
         setLoading(false);
       });
-  }, []);
+  };
+
+  // Fonction pour ajouter un utilisateur
+  const handleAddUser = (e) => {
+    e.preventDefault();
+    if (!name || !email) {
+      alert("Please fill in both fields");
+      return;
+    }
+
+    const newUser = { name, email };
+
+    fetch("http://localhost:8000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add user");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("User added:", data);
+        fetchUsers(); // Rafraîchit la liste des utilisateurs
+        setName("");
+        setEmail("");
+      })
+      .catch((error) => {
+        console.error("Error adding user:", error);
+        setError(error.message);
+      });
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Frontend & Backend Integration</h1>
-
-        {loading && <p>Loading data from the backend...</p>}
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        {!loading && !error && (
+      <h1>User Management</h1>
+      <div>
+        <h2>Add a New User</h2>
+        <form onSubmit={handleAddUser}>
           <div>
-            <h2>Message from Backend:</h2>
-            <div className="backend-message">
-              {message ? message : "No message received"}
-            </div>
+            <label>
+              Name:
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </label>
           </div>
+          <div>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <button type="submit">Add User</button>
+        </form>
+      </div>
+      <div>
+        <h2>Users List</h2>
+        {loading ? (
+          <p>Loading users...</p>
+        ) : error ? (
+          <p style={{ color: "red" }}>Error: {error}</p>
+        ) : users.length === 0 ? (
+          <p>No users found.</p>
+        ) : (
+          <ul>
+            {users.map((user, index) => (
+              <li key={index}>
+                <strong>Name:</strong> {user.name} <br />
+                <strong>Email:</strong> {user.email}
+              </li>
+            ))}
+          </ul>
         )}
-
-        <footer>
-          <p>
-            This message is fetched from the backend API running at{" "}
-            <code>http://backend:8000</code>
-          </p>
-        </footer>
-      </header>
+      </div>
     </div>
   );
 }

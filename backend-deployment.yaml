@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: thxz3us/tp-info910-backend
+          image: thxz3us/backend
           ports:
             - containerPort: 8000
 ---
