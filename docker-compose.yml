@@ -1,7 +1,7 @@
 version: "3"
 services:
   backend:
-    image: thxz3us/backend
+    image: info910/backend
     build:
       context: ./backend
     ports:
@@ -10,7 +10,7 @@ services:
       - app-network
 
   frontend:
-    image: thxz3us/frontend
+    image: info910/frontend
     build:
       context: ./frontend
     ports:

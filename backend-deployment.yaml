@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: thxz3us/backend
+          image: info910/backend
+          imagePullPolicy: Never
           ports:
             - containerPort: 8000
 ---
@@ -29,4 +30,5 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-  type: ClusterIP
+      nodePort: 30001
+  type: NodePort

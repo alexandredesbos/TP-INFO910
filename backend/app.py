@@ -1,12 +1,23 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
+import logging
+
 
 app = Flask(__name__)
 CORS(app)
 
-client = MongoClient("mongodb://localhost:27017/")
-db = client["mydatabase"]
+
+logging.basicConfig(level=logging.INFO)
+
+try:
+    client = MongoClient("mongodb://mongodb-service:27017/")
+    db = client["mydatabase"]
+    logging.info("Connected to MongoDB successfully")
+except Exception as e:
+    logging.error(f"Failed to connect to MongoDB: {e}")
+
+
 collection = db["users"]
 
 

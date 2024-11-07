@@ -15,7 +15,7 @@ function App() {
 
   const fetchUsers = () => {
     setLoading(true);
-    fetch("http://localhost:8000/api/users")
+    fetch("http://192.168.49.2:30001/api/users")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch users");
@@ -44,7 +44,7 @@ function App() {
 
     const newUser = { name, email };
 
-    fetch("http://localhost:8000/api/register", {
+    fetch("http:///192.168.49.2:30001/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
