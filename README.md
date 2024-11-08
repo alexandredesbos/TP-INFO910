@@ -12,7 +12,9 @@ Il faut cloner le repository, puis se rendre dans le dossier TP-INFO910.
 Il faut ensuite créer les containers avec les commandes :
 
 $ docker build -t info910/backend ./backend
+
 $ docker build -t info910/frontend ./frontend
+
 $ docker-compose up --build
 
 Pour kubernetes :
